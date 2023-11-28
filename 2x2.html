@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Grid Example</title>
+  <style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 10px;
+      width: 33%;
+    }
+    
+    .grid-item {
+      background-color: #9700c9;
+      border: 1px solid #ccc;
+      padding: 20px;
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div class="grid-item"></div>
+    <div class="grid-item"></div>
+    <div class="grid-item"></div>
+    <div class="grid-item"></div>
+  </div>
+</body>
+</html>
