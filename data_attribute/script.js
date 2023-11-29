@@ -21,7 +21,3 @@ function changeColor(nthBox){
 
     })
 }
-
-function updateColors(){
-
-}
