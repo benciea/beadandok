@@ -1,0 +1,98 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  background: #B3DEC1;
+}
+
+.memory-game {
+  width: 640px;
+  height: 640px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  perspective: 1000px;
+}
+
+.memory-card {
+  width: calc(25% - 10px);
+  height: calc(33.333% - 10px);
+  margin: 5px;
+  position: relative;
+  transform: scale(1);
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+  box-shadow: 1px 1px 1px rgba(0,0,0,.3);
+}
+
+.memory-card:active {
+  transform: scale(0.97);
+  transition: transform .2s;
+}
+
+.memory-card:hover{
+  transform: scale(1.05) rotate(3deg);
+  border: 1px solid yellow;
+  border-radius: 5px;
+}
+
+.memory-card.flip {
+  transform: rotateY(180deg);
+}
+
+.front, .back {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  position: absolute;
+  border-radius: 5px;
+  background: #750D37;
+  backface-visibility: hidden;
+}
+
+.front {
+  transform: rotateY(180deg);
+}
+
+#win-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: none;
+}
+
+#win-text {
+  font-size: 30px;
+  color: #333;
+}
+
+#countdown, #timer {
+  font-size: 24px;
+  color: #555;
+}
+
+#timer {
+  margin: 15px;
+  
+}
+
+.rainbow-background {
+  animation: rainbowAnimation 5s infinite;
+}
+
+@keyframes rainbowAnimation {
+  0% { background-color: #FF0000; }
+  16.66% { background-color: #FF7F00; }
+  33.33% { background-color: #FFFF00; }
+  50% { background-color: #00FF00; }
+  66.66% { background-color: #0000FF; }
+  83.33% { background-color: #4B0082; }
+  100% { background-color: #9400D3; }
+}
