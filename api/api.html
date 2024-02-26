@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magyar API</title>
+</head>
+<body>
+    <label>Város: </label>
+    <input type="text" id="inputText">
+    <button type="submit" onclick="getZip()">Submit</button>
+    <p id="result"></p>
+    <script>
+        function getZip(){
+            let varos = document.getElementById("inputText").value;
+            let result = "";
+            fetch(`https://hur.webmania.cc/zips/${varos}.json`)
+            .then(response => {
+                if(!response.ok){
+                    throw new Error("Network error")
+                }
+                return response.json();
+            })
+            .then(megye => {
+                if(megye.zips.length < 1){
+                    document.getElementById("result").innerHTML = "Nincs a keresésnek megfelelő találat.";
+                    return;
+                }
+                result += "A ZIP kódok: <br>"
+                for(let i=0; i<megye.zips.length; i++){
+                    console.log(megye.zips[i].zip)
+                    result += megye.zips[i].zip + "<br>";
+                }
+                document.getElementById("result").innerHTML = result;
+
+            })
+        }
+    </script>
+</body>
+</html>
