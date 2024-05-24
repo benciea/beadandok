@@ -1,22 +1,35 @@
 const url = "https://vvri.pythonanywhere.com/api";
 const expanded = {};
 
-function fetchCourses() {
-    fetch(`${url}/courses`).then(response => response.json()).then(data => {document.getElementById('courses').innerHTML = '';data.forEach(course => {addCoursePanel(course);});})
-    .catch(error => console.log(`Hiba történt: ${error}`));
+async function fetchCourses() {
+    try {
+        const response = await fetch(`${url}/courses`);
+        const data = await response.json();
+        document.getElementById('courses').innerHTML = '';
+        data.forEach(course => {
+            addCoursePanel(course);
+        });
+    } catch (error) {
+        console.log(`Hiba történt: ${error}`);
+    }
 }
 
-function createCourse() {
+async function createCourse() {
     const courseName = document.getElementById("newCourseName").value;
-    fetch(`${url}/courses`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name: courseName })
-    })
-    .then(response => response.json()).then(data => {console.log("Új kurzus: ", data); fetchCourses();})
-    .catch(error => console.log("Hiba történt: " + error));
+    try {
+        const response = await fetch(`${url}/courses`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: courseName })
+        });
+        const data = await response.json();
+        console.log("Új kurzus: ", data);
+        fetchCourses();
+    } catch (error) {
+        console.log("Hiba történt: " + error);
+    }
 }
 
 function addCoursePanel(course) {
@@ -45,60 +58,69 @@ function addCoursePanel(course) {
     document.getElementById('courses').appendChild(coursePanel);
 }
 
-function addStudent(courseId) {
+async function addStudent(courseId) {
     const studentName = prompt("Kérem, adja meg az új diák nevét:");
     if (studentName) {
-        fetch(`${url}/students`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: studentName,
-                course_id: courseId
-            })
-        })
-        .then(response => response.json()).then(data => {fetchCourses();})
-        .catch(error => console.log("Hiba történt: " + error));
+        try {
+            const response = await fetch(`${url}/students`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: studentName,
+                    course_id: courseId
+                })
+            });
+            const data = await response.json();
+            fetchCourses();
+        } catch (error) {
+            console.log("Hiba történt: " + error);
+        }
     }
 }
 
-function renameStudent(studentId) {
+async function renameStudent(studentId) {
     const studentNameEl = document.getElementById(`studentName_${studentId}`);
     const newStudentName = prompt("Diák új neve:", studentNameEl.innerText);
     if (newStudentName !== null) {
-        fetch(`${url}/students/${studentId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name: newStudentName })
-        })
-        .then(response => response.json()).then(data => {studentNameEl.innerText = newStudentName;})
-        .catch(error => console.log(`Hiba történt: ${error}`));
+        try {
+            const response = await fetch(`${url}/students/${studentId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: newStudentName })
+            });
+            const data = await response.json();
+            studentNameEl.innerText = newStudentName;
+        } catch (error) {
+            console.log(`Hiba történt: ${error}`);
+        }
     }
 }
 
-function deleteStudent(courseId, studentId, button) {
-    fetch(`${url}/students/${studentId}`, {
-        method: 'DELETE'
-    })
-    .then(response => {
+async function deleteStudent(courseId, studentId, button) {
+    try {
+        const response = await fetch(`${url}/students/${studentId}`, {
+            method: 'DELETE'
+        });
         if (response.ok) {
             const studentElement = button.parentNode.parentNode;
             studentElement.remove();
         } else {
             console.log("Hiba a diák törlésekor");
         }
-    })
-    .catch(error => console.log(`Hiba történt: ${error}`));
+    } catch (error) {
+        console.log(`Hiba történt: ${error}`);
+    }
 }
 
-function deleteCourse(courseId) {
-    fetch(`${url}/courses/${courseId}`, {
-        method: 'DELETE'
-    })
-    .then(response => {
+async function deleteCourse(courseId) {
+    try {
+        const response = await fetch(`${url}/courses/${courseId}`, {
+            method: 'DELETE'
+        });
         if (response.ok) {
             const coursePanel = document.querySelector(`.course[data-course-id="${courseId}"]`);
             if (coursePanel) {
@@ -107,8 +129,9 @@ function deleteCourse(courseId) {
         } else {
             console.log("Nem sikerült törölni a kurzust.");
         }
-    })
-    .catch(error => console.log(`Hiba történt: ${error}`));
+    } catch (error) {
+        console.log(`Hiba történt: ${error}`);
+    }
 }
 
 function toggleStudents(courseId) {
