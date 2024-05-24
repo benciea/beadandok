@@ -8,11 +8,13 @@ h1 {
     text-align: center;
     color: #333;
 }
+
 .container {
     max-width: 800px;
     margin: 20px auto;
     padding: 0 20px;
 }
+
 .course {
     background-color: #fff;
     border: 1px solid #ccc;
@@ -21,14 +23,17 @@ h1 {
     padding: 15px;
     transition: box-shadow 0.3s;
 }
+
 .course:hover {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
+
 .course h2 {
     margin-top: 0;
     margin-bottom: 10px;
     color: #333;
 }
+
 .btn {
     background-color: #007bff;
     color: #fff;
@@ -38,14 +43,17 @@ h1 {
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
 .btn:hover {
     background-color: #0056b3;
 }
+
 .students {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
 }
+
 .studentItem {
     display: flex;
     justify-content: space-between;
