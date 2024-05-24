@@ -1,5 +1,4 @@
 const url = "https://vvri.pythonanywhere.com/api";
-
 const expanded = {};
 
 function fetchCourses() {
@@ -66,9 +65,8 @@ function addStudent(courseId) {
 
 function renameStudent(studentId) {
     const studentNameEl = document.getElementById(`studentName_${studentId}`);
-    const newStudentName = prompt("Diál új neve:", studentNameEl.innerText);
+    const newStudentName = prompt("Diák új neve:", studentNameEl.innerText);
     if (newStudentName !== null) {
-        console.log(newStudentName);
         fetch(`${url}/students/${studentId}`, {
             method: 'PUT',
             headers: {
